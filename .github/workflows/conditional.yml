@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   hello-world:
-    if: github.repository == 'octo-org/octo-repo-prod'
+    if: github.repository == 'NabilMx99/Github-Examples'
     runs-on: ubuntu-latest
     steps:
       - name: Hello World
