@@ -1,0 +1,22 @@
+name: Anchors & Aliases Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  job1:
+    env: &anchor_env
+      firstName: Nabil
+      lastName: Al Masri
+    
+    runs-on: ubuntu-latest
+    steps: &anchor_step
+      - name: Say Hello
+        run: echo "Hello ${{ env.firstName }} ${{ env.lastName }}"
+   
+  job2:
+    env: *anchor_env
+    runs-on: ubuntu-latest
+    steps: *anchor_step
