@@ -1,0 +1,29 @@
+name: Workflow Commands
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Debug Message
+        run: echo "::debug::Set the Octocat variable"
+
+      - name: Group Logging
+        run: |
+          echo "::group::My Group Message"
+          echo "Msg 1"
+          echo "Msg 2"
+          echo "::endgroup::"
+
+      - name: Set Env Variable
+        run: |
+          echo "action_state=yellow" >> "$GITHUB_ENV"
+
+      - name: Use Env Variable
+        run: |
+          printf '%s\n' "$action_state"
