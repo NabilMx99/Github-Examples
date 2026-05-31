@@ -1,0 +1,22 @@
+name: Contexts Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  my-context:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Display Workflow Info
+        run: |
+          echo "Workflow name: ${{ github.workflow }}"
+          echo "Workflow run triggered by: ${{ github.actor }} with ID: ${{ github.actor_id }}"
+          echo "Workflow event name: ${{ github.event_name }}"
+          echo "Workflow job name: ${{ github.job }}"
+          echo "Workflow run ID: ${{ github.run_id }}"
+          echo "Repository name: ${{ github.repository }}"
+          echo "Repository ID: ${{ github.repository_id }}"
+          echo "Repository URL: ${{ github.repositoryUrl }}"
