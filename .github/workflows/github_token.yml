@@ -1,0 +1,27 @@
+name: GITHUB_TOKEN Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      pull_number:
+        description: 'PR number'
+        required: true
+        type: number
+
+jobs:
+  close-pr:
+    runs-on: ubuntu-latest
+
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Close pull request
+        run: |
+          curl -L \
+          -X PATCH \
+          -H "Accept: application/vnd.github+json" \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "X-GitHub-Api-Version: 2026-03-10" \
+           https://api.github.com/repos/${{ github.repository }}/pulls/${{ inputs.pull_number }} \
+           -d '{"state":"closed"}'
