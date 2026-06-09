@@ -1,0 +1,28 @@
+name: Variables Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Say Hello
+        run: |
+          echo "Hello $FIRST_NAME $LAST_NAME!"
+
+        env:
+          FIRST_NAME: ${{ vars.FIRST_NAME }}
+          LAST_NAME: ${{ vars.LAST_NAME }}
+
+      - name: Print Default Env Vars
+        run: |
+          echo "GITHUB_ACTOR: $GITHUB_ACTOR"
+          echo "GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+          echo "GITHUB_REPOSITORY: $GITHUB_REPOSITORY"
+          echo "GITHUB_REPOSITORY_ID: $GITHUB_REPOSITORY_ID"
+          echo "GITHUB_STEP_SUMMARY: $GITHUB_STEP_SUMMARY"
+          echo "RUNNER_OS: $RUNNER_OS"
