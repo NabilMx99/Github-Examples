@@ -1,0 +1,38 @@
+name: Service Containers Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  runner-job:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Install dependencies
+        run: |
+          cd ./github-actions/pg/
+          npm install
+
+      - name: Connect to PostgreSQL
+        run: node ./github-actions/pg/client.js
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_PORT: 5432
