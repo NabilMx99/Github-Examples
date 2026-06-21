@@ -1,0 +1,40 @@
+name: Publish Release Workflow
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Build zip artifact
+        run: |
+          mkdir -p dist
+          zip -r dist/slugify-${{ github.ref_name }}.zip components/slugify
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: slugify ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          asset_name: slugify-${{ github.ref_name }}.zip
+          asset_path: dist/slugify-${{ github.ref_name }}.zip
+          asset_content_type: application/zip
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
