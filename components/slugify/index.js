@@ -9,4 +9,4 @@ function slugify(input) {
     .replace(/-+/g, "-");
 }
 
-module.exports = { slugify };
+module.exports = { slugify };// patch release practice
