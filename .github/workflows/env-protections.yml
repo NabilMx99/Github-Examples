@@ -1,0 +1,32 @@
+name: Env Protections Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Build simulation
+        run: |
+          echo "Building app..."
+          sleep 5
+          echo "Build complete."
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: production
+      url: https://example.com
+    steps:
+      - name: Deploy simulation
+        run: |
+          echo "Deploying to production..."
+          sleep 5
+          echo "Deployment done."
