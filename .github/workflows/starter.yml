@@ -1,0 +1,28 @@
+name: Starter Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      first-number:
+        description: 'Enter the first number'
+        default: 0
+        required: true
+        type: number
+      second-number:
+        description: 'Enter the second number'
+        default: 0
+        required: true
+        type: number
+      
+jobs:
+  add-two-numbers:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Add two numbers
+      run: |
+        num1=${{ inputs.first-number }}
+        num2=${{ inputs.second-number }}
+        sum=$((num1 + num2))
+
+        echo "$num1 + $num2 = $sum"
