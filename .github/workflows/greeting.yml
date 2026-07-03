@@ -1,0 +1,12 @@
+name: Greeting Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  greet:
+    uses: NabilMx99/test-repository/.github/workflows/reusable.yml@main
+    with:
+      dotnet-version: latest
