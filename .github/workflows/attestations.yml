@@ -1,0 +1,33 @@
+name: Attestations Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  attest-artifact:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+      attestations: write
+
+    steps:
+      - name: Create file
+        run: |
+          echo 'Hello World' > file.txt
+
+      - name: Upload file artifact
+        id: artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: my-artifact
+          path: file.txt
+          retention-days: 3
+
+      - name: Generate artifact attestation
+        uses: actions/attest@a1948c3f048ba23858d222213b7c278aabede763
+        with:
+          subject-path: file.txt
