@@ -1,0 +1,26 @@
+name: Caches Workflow
+
+on:
+  workflow_dispatch:
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+
+      - name: Create files to cache
+        run: |
+          mkdir -p .cache
+          echo "Hello, GitHub Actions cache!" > .cache/example.txt
+
+      - name: Save/Restore cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9
+        with:
+          path: .cache
+          key: demo-cache-${{ runner.os }}-${{ github.run_id }}
+
+      - name: Verify cached files
+        run: cat .cache/example.txt
